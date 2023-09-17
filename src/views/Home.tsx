@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { DigiButton, DigiFormTextarea, DigiFormInput } from '@digi/arbetsformedlingen-react';
 import { ButtonVariation, FormInputType, FormInputValidation, FormInputVariation, FormTextareaValidation, FormTextareaVariation } from '@digi/arbetsformedlingen';
 import { EduToWorkData } from "../service/EduToWorkService";
+import SearchResults from './Results';
 
 const Home = () => {
   const searchService = EduToWorkData();
   const [headlineInput, setHeadlineInput] = useState<string>('');
   const [textInput, setTextInput] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
-
+  const [occupations, setOccupations] = useState();
   async function workTitles() {
     if (textInput.trim() === '') {
       setErrorMessage('Vänligen ange en utbildningsbeskrivning.');
@@ -17,6 +18,7 @@ const Home = () => {
 
     setErrorMessage('');
     const result = await searchService.fetchWorkTitles(headlineInput, textInput);
+    setOccupations(result);
     console.log(result);
   }
 
@@ -49,6 +51,7 @@ const Home = () => {
       >
         Sök
       </DigiButton>
+      <SearchResults occupations={occupations}></SearchResults>
     </>
   ); 
 };
