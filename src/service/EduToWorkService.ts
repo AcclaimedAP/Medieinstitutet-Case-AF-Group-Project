@@ -30,5 +30,34 @@ export function EduToWorkData() {
     }
   }
 
-  return { fetchWorkTitles }
+  async function fetchCompetencies(occupationId: string) {
+    const API = 'https://jobed-connect-api.jobtechdev.se/v1/enriched_occupations';
+  
+    const queryParams = new URLSearchParams({
+      occupation_id: occupationId,
+      include_metadata: 'true',
+    });
+  
+    const url = `${API}?${queryParams}`;
+  
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Network error: ${response.status}`);
+      }
+  
+      return await response.json();
+    } catch (error) {
+      console.error('Error when fetching competencies:', error);
+      throw error;
+    }
+  }
+
+  return { fetchWorkTitles, fetchCompetencies }
 }
