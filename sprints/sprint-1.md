@@ -8,6 +8,10 @@ Vi skapade en Figma wireframe tillsammans och började planera för den första 
 
 Sprintplanering. Vi la tillsammans in uppgifter i backloggen och började fördela arbetsuppgifter. Vi mob-kodade tillsammans för att gå till en bra grund i projektet.
 
+Backlog för första veckan:
+
+![Sprint 1](https://github.com/Medieinstitutet/case-f-r-arbetsf-rmedlingen-och-jobtech-grupp-5-1/assets/113124538/4b5034bd-9187-459c-9321-fb299f51b156)
+
 ## 18-Sep-2023
 
 - Liza: Sedan det senaste mötet har jag lagt in fetch calls för att hämta yrken och kompetenser. Jag har även lagt in inputfält och textarea, samt kopplat en knapp till API fetch, samt använt mig av AFs komponenter.
