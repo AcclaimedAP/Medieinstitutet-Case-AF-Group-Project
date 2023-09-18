@@ -2,11 +2,14 @@ import './App.css';
 import '@digi/arbetsformedlingen/dist/digi-arbetsformedlingen/digi-arbetsformedlingen.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
+import OccupationProvider from './reducers/OccupationReducer';
 
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <OccupationProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </OccupationProvider>
     </>
   );
 }
