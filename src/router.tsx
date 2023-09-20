@@ -1,16 +1,21 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from './components/Layout';
-import Home from './views/Home';
-import NotFound from './views/NotFound';
+import { createBrowserRouter } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./views/Home";
+import NotFound from "./views/NotFound";
 
 export const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Layout></Layout>,
     errorElement: <NotFound></NotFound>,
     children: [
       {
-        path: '/',
+        path: "/",
+        element: <Home></Home>,
+        index: true,
+      },
+      {
+        path: "/search",
         element: <Home></Home>,
         index: true,
       },
