@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+.form span {
+  color: white;
+}
+
+.form button span {
+  color: #95c23e;
+}
+
+.form button:hover span {
+  color: #00005a !important;
+}
+
+.form button:hover {
+  background-color: #95c23e !important;
+}
+
+button {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+}
