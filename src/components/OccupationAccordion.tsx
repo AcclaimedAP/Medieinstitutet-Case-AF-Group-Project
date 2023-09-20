@@ -26,20 +26,22 @@ const OccupationAccordion = ({ occupation }: IProps) => {
       taxonomyId: string
     ): Promise<IRelatedOccupation> => {
       const result = await searchService.fetchCompetencies(taxonomyId);
-      console.log(result);
+
       return result;
     };
 
-    searchCompetencies(occupation.concept_taxonomy_id)
-      .then((res) =>
-        setDiagramData(
-          res.metadata.enriched_candidates_term_frequency.competencies.slice(
-            0,
-            10
+    if (!diagramData.length) {
+      searchCompetencies(occupation.concept_taxonomy_id)
+        .then((res) =>
+          setDiagramData(
+            res.metadata.enriched_candidates_term_frequency.competencies.slice(
+              0,
+              10
+            )
           )
         )
-      )
-      .catch((err) => console.error(err));
+        .catch((err) => console.error(err));
+    }
   }, [isExpanded]);
 
   const handleAccordionClick: React.MouseEventHandler<
@@ -61,12 +63,9 @@ const OccupationAccordion = ({ occupation }: IProps) => {
               Arbetsgrupp: {occupation.occupation_group.occupation_group_label}
             </p>
           </DigiTypography>
-          <div className='w-[250px] h-[250px] tablet:w-[400px] tablet:h-[265px]'>
+          <div className='w-[250px] h-[400px] tablet:w-[500px] tablet:h-[500px]'>
             {diagramData.length ? (
-              <Diagram
-                diagramData={diagramData}
-                occupationLabel={occupation.occupation_label}
-              />
+              <Diagram diagramData={diagramData} />
             ) : (
               <LoadingSpinner />
             )}
