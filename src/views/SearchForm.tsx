@@ -22,12 +22,10 @@ const SearchForm = () => {
     setErrorMessage("");
     const result: IOccupations = await searchService.fetchWorkTitles(headlineInput, textInput);
     dispatch({ payload: result, type: "updated" });
-    NavigateToSearch();
+    navigate("/search");
     console.log(result);
   }
-  const NavigateToSearch = () => {
-    navigate("/search");
-  };
+
   return (
     <>
       <DigiFormInput afLabel="Utbildningstitel" afVariation={FormInputVariation.MEDIUM} afType={FormInputType.TEXT} afValidation={FormInputValidation.NEUTRAL} value={headlineInput} onAfOnChange={(e) => setHeadlineInput(String(e.target.value))} />
