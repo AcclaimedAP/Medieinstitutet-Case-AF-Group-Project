@@ -10,7 +10,7 @@ const SearchResults = () => {
   const [occupations, setOccupations] = useState<IOccupations>();
 
   useEffect(() => {
-    const updateOccupations = async () => {
+    const updateOccupations = () => {
       setOccupations(context?.state.occupations);
     };
     updateOccupations();
