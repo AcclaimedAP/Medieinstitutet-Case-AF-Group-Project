@@ -23,6 +23,7 @@ const SearchForm = () => {
   const [headlineInput, setHeadlineInput] = useState<string>('');
   const [textInput, setTextInput] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
   const navigate = useNavigate();
   async function workTitles() {
     if (textInput.trim() === '') {
@@ -35,14 +36,20 @@ const SearchForm = () => {
       headlineInput,
       textInput
     );
+
     dispatch({ payload: result, type: 'updated' });
     navigate('/search');
-    console.log(result);
+    setIsButtonClicked(true);
   }
 
   return (
     <>
-      <div className='bg-primary p-4 flex flex-col items-center form'>
+      <div className='bg-desktopBackground !important'>
+      <div className={`bg-primary p-10 h-85 w-1/3 flex flex-col items-center form rounded-lg fixed top-1/2 ${
+        isButtonClicked ? 'left-100' : 'left-1/2 transform -translate-x-1/2'
+        } -translate-y-1/2`}
+      >
+        <h2 className='text-white text-h3 pb-6'>Sök efter tjänster utifrån utbildning</h2>
         <DigiFormInput
           className='w-full'
           afLabel='Utbildningstitel'
@@ -70,6 +77,7 @@ const SearchForm = () => {
         >
           Sök
         </DigiButton>
+      </div>
       </div>
     </>
   );
