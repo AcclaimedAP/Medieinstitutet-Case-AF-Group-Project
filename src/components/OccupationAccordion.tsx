@@ -37,12 +37,12 @@ const OccupationAccordion = ({ occupation }: IProps) => {
 
   const handleAccordionClick: React.MouseEventHandler<HTMLDigiExpandableAccordionElement> = () => {
     const params = {
-      title: searchParams.get("title") ? searchParams.get("title") : "",
-      desc: searchParams.get("desc") ? searchParams.get("desc") : "",
-      id: searchParams.get("id") ? searchParams.get("id") : "",
+      title: searchParams.get("title") || "",
+      desc: searchParams.get("desc") || "",
+      id: searchParams.get("id") || "",
     };
     setIsExpanded((prev) => !prev);
-    if (params.title === null || params.desc === null) {
+    if (!params.title || !params.desc) {
       return;
     }
     if (params.id === occupation.id) {

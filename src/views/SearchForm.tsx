@@ -36,10 +36,8 @@ const SearchForm = () => {
     const result: IOccupations = await searchService.fetchWorkTitles(title, description);
     dispatch({ payload: result, type: "updated" });
     navigate("/search");
-    let id = searchParams.get("id");
-    if (id === null) {
-      id = "";
-    }
+    const id = searchParams.get("id") || "";
+
     setSearchParams({ title: title, desc: description, id: id });
   }
 
