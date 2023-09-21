@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DigiButton, DigiFormTextarea, DigiFormInput } from "@digi/arbetsformedlingen-react";
 import { ButtonVariation, FormInputType, FormInputValidation, FormInputVariation, FormTextareaValidation, FormTextareaVariation } from "@digi/arbetsformedlingen";
 import { EduToWorkData } from "../service/EduToWorkService";
@@ -14,6 +14,16 @@ const SearchForm = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    console.log(searchParams.get("title"));
+    const title = searchParams.get("title");
+    const desc = searchParams.get("desc");
+    if (title == null || desc == null) {
+      return;
+    }
+    setHeadlineInput(title);
+    setTextInput(desc);
+  }, []);
   async function workTitles() {
     if (textInput.trim() === "") {
       setErrorMessage("Vänligen ange en utbildningsbeskrivning.");
