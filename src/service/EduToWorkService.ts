@@ -1,15 +1,20 @@
 export function EduToWorkData() {
-  async function fetchWorkTitles(headlineInput: string, textInput: string) {
-    const API = 'https://jobed-connect-api.jobtechdev.se/v1/occupations/match-by-text';
-  
+  async function fetchWorkTitles(
+    headlineInput: string,
+    textInput: string,
+    offset: number = 0
+  ) {
+    const API =
+      'https://jobed-connect-api.jobtechdev.se/v1/occupations/match-by-text';
+
     const requestBody = {
       input_text: textInput,
       input_headline: headlineInput,
       limit: 10,
-      offset: 0,
+      offset: offset,
       include_metadata: false,
     };
-  
+
     try {
       const response = await fetch(API, {
         method: 'POST',
@@ -18,11 +23,11 @@ export function EduToWorkData() {
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Network error: ${response.status}`);
       }
-  
+
       return await response.json();
     } catch (error) {
       console.error('Error when fetching work titles:', error);
@@ -31,15 +36,16 @@ export function EduToWorkData() {
   }
 
   async function fetchCompetencies(occupationId: string) {
-    const API = 'https://jobed-connect-api.jobtechdev.se/v1/enriched_occupations';
-  
+    const API =
+      'https://jobed-connect-api.jobtechdev.se/v1/enriched_occupations';
+
     const queryParams = new URLSearchParams({
       occupation_id: occupationId,
       include_metadata: 'true',
     });
-  
+
     const url = `${API}?${queryParams}`;
-  
+
     try {
       const response = await fetch(url, {
         method: 'GET',
@@ -47,11 +53,11 @@ export function EduToWorkData() {
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`Network error: ${response.status}`);
       }
-  
+
       return await response.json();
     } catch (error) {
       console.error('Error when fetching competencies:', error);
@@ -59,5 +65,5 @@ export function EduToWorkData() {
     }
   }
 
-  return { fetchWorkTitles, fetchCompetencies }
+  return { fetchWorkTitles, fetchCompetencies };
 }
