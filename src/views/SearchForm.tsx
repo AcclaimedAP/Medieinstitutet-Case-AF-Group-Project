@@ -4,7 +4,7 @@ import { ButtonVariation, FormInputType, FormInputValidation, FormInputVariation
 import { EduToWorkData } from "../service/EduToWorkService";
 import IOccupations from "../interfaces/IOccupations";
 import { OccupationDispatchContext } from "../OccupationsContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const SearchForm = () => {
   const dispatch = useContext(OccupationDispatchContext);
@@ -13,6 +13,7 @@ const SearchForm = () => {
   const [textInput, setTextInput] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   async function workTitles() {
     if (textInput.trim() === "") {
       setErrorMessage("Vänligen ange en utbildningsbeskrivning.");
@@ -23,6 +24,7 @@ const SearchForm = () => {
     const result: IOccupations = await searchService.fetchWorkTitles(headlineInput, textInput);
     dispatch({ payload: result, type: "updated" });
     navigate("/search");
+    setSearchParams({ title: headlineInput, desc: textInput });
     console.log(result);
   }
 
