@@ -9,17 +9,18 @@ export default {
         primary: '#00005A',
         accent: '#95C23E',
         white: '#fafafa',
+        whiteDark: '#F1F1F1',
       },
 
       fontSize: {
-        'h1': '2rem',
-        'h2': '1.5rem',
-        'h3': '1.25rem',
-        'h4': '1.125rem'
+        h1: '2rem',
+        h2: '1.5rem',
+        h3: '1.25rem',
+        h4: '1.125rem',
       },
 
       backgroundImage: {
-        'desktopBackground': "url('/desktopImage.jpg')",
+        desktopBackground: "url('/desktopImage.jpg')",
       },
 
       leftAligned: {
@@ -28,11 +29,11 @@ export default {
       },
 
       spacing: {
-        '100': '100px',
-        '250': '250px',
-        '300': '300px',
-        '500': '500px',
-        '600': '600px',
+        100: '100px',
+        250: '250px',
+        300: '300px',
+        500: '500px',
+        600: '600px',
       },
     },
 

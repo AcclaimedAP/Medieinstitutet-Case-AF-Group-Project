@@ -20,7 +20,10 @@ const SearchResults = () => {
     return (
       <>
         {occupationsList.related_occupations.map((occupation, index) => (
-          <div key={index} className='bg-white mb-2 pl-1 border border-primary rounded-lg'>
+          <div
+            key={index}
+            className='bg-white mb-2 pl-1 border border-primary rounded-lg'
+          >
             <OccupationAccordion occupation={occupation} key={index} />
           </div>
         ))}
@@ -34,10 +37,11 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className='bg-accent flex flex-col items-center justify-center h-auto w-auto p-10 mt-7 absolute right-0 translate-x-[-100px] border-2 border-primary rounded-lg'>
+      <div className='bg-whiteDark flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:translate-x-[-100px]  laptop:rounded-lg'>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h1 className='text-primary'>
-            Sökresultat, hittade {occupations.hits_total}st, visar {occupations.hits_returned}st
+            Sökresultat, hittade {occupations.hits_total}st, visar{' '}
+            {occupations.hits_returned}st
           </h1>
         </DigiTypography>
         <OccupationMap {...occupations}></OccupationMap>
