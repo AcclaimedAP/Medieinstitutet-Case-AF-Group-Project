@@ -23,18 +23,21 @@ const SearchForm = () => {
     }
     setHeadlineInput(title);
     setTextInput(desc);
+    workTitles(title, desc);
   }, []);
-  async function workTitles() {
-    if (textInput.trim() === "") {
+  async function workTitles(title: string, description: string) {
+    console.log("worktitles: ", title, description);
+
+    if (description.trim() === "") {
       setErrorMessage("Vänligen ange en utbildningsbeskrivning.");
       return;
     }
 
     setErrorMessage("");
-    const result: IOccupations = await searchService.fetchWorkTitles(headlineInput, textInput);
+    const result: IOccupations = await searchService.fetchWorkTitles(title, description);
     dispatch({ payload: result, type: "updated" });
     navigate("/search");
-    setSearchParams({ title: headlineInput, desc: textInput });
+    setSearchParams({ title: title, desc: description });
     console.log(result);
   }
 
@@ -43,7 +46,12 @@ const SearchForm = () => {
       <DigiFormInput afLabel="Utbildningstitel" afVariation={FormInputVariation.MEDIUM} afType={FormInputType.TEXT} afValidation={FormInputValidation.NEUTRAL} value={headlineInput} onAfOnChange={(e) => setHeadlineInput(String(e.target.value))} />
       <DigiFormTextarea afLabel="Utbildningsbeskrivning*" afVariation={FormTextareaVariation.MEDIUM} afValidation={FormTextareaValidation.NEUTRAL} value={textInput} onAfOnChange={(e) => setTextInput(String(e.target.value))}></DigiFormTextarea>
       {errorMessage && <div style={{ color: "red", marginBottom: "10px" }}>{errorMessage}</div>}
-      <DigiButton onAfOnClick={workTitles} afVariation={ButtonVariation.PRIMARY}>
+      <DigiButton
+        onAfOnClick={() => {
+          workTitles(headlineInput, textInput);
+        }}
+        afVariation={ButtonVariation.PRIMARY}
+      >
         Sök
       </DigiButton>
     </>
