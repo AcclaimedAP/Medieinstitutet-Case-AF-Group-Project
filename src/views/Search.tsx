@@ -1,5 +1,5 @@
-import SearchResults from "./Results";
-import SearchForm from "./SearchForm";
+import SearchResults from './Results';
+import SearchForm from './SearchForm';
 
 const Search = () => {
   return (
