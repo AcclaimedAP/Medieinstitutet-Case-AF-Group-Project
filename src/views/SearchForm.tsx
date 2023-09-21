@@ -44,11 +44,11 @@ const SearchForm = () => {
 
   return (
     <>
-      <div className='laptop:bg-desktopBackground laptop:bg-cover laptop:h-screen'>
+      <div className={`laptop:bg-desktopBackground laptop:bg-cover laptop:h-[calc(100vh-80px)] ${isButtonClicked ? 'laptop:bg-none' : ''}`}>
         <div
-          className={`bg-primary min-w-[320px] p-6 gap-4 h-auto flex flex-col items-center form laptop:w-1/3 laptop:rounded-lg laptop:fixed laptop:mt-250 ${
+          className={`bg-primary min-w-[320px] p-6 gap-4 h-auto flex flex-col items-center form laptop:w-1/3 laptop:rounded-lg laptop:fixed laptop:mt-260 ${
             isButtonClicked
-              ? 'laptop:left-100'
+              ? 'laptop:left-[50px]'
               : 'laptop:left-1/2 laptop:transform laptop:-translate-x-1/2'
           } laptop:-translate-y-1/2`}
         >

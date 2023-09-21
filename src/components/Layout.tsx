@@ -12,7 +12,7 @@ export const Layout = () => {
         </div>
         {/* <div className="mb-4 absolute inset-x-0 bottom-0 h-4 bg-gradient-to-t from-transparent to-primary"></div> */}
       </header>
-      <main className='min-h-screen'>
+      <main>
         <Outlet></Outlet>
       </main>
       <footer></footer>
