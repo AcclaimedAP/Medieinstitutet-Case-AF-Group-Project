@@ -15,7 +15,6 @@ const SearchForm = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
-    console.log(searchParams.get("title"));
     const title = searchParams.get("title");
     const desc = searchParams.get("desc");
     if (title == null || desc == null) {
@@ -37,8 +36,11 @@ const SearchForm = () => {
     const result: IOccupations = await searchService.fetchWorkTitles(title, description);
     dispatch({ payload: result, type: "updated" });
     navigate("/search");
-    setSearchParams({ title: title, desc: description });
-    console.log(result);
+    let id = searchParams.get("id");
+    if (id === null) {
+      id = "";
+    }
+    setSearchParams({ title: title, desc: description, id: id });
   }
 
   return (

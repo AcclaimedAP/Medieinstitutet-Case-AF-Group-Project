@@ -11,10 +11,14 @@ interface IProps {
 }
 
 const OccupationAccordion = ({ occupation }: IProps) => {
-  const [diagramData, setDiagramData] = useState<IEnrichedCompetence[]>([]);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const searchService = EduToWorkData();
   const [searchParams, setSearchParams] = useSearchParams();
+  const idParamsCheck = () => {
+    return searchParams.get("id") == occupation.id;
+  };
+  const [diagramData, setDiagramData] = useState<IEnrichedCompetence[]>([]);
+  const [isExpanded, setIsExpanded] = useState<boolean>(idParamsCheck());
+  const searchService = EduToWorkData();
+
   useEffect(() => {
     if (!isExpanded) return;
 
@@ -42,7 +46,7 @@ const OccupationAccordion = ({ occupation }: IProps) => {
       return;
     }
     if (params.id === occupation.id) {
-      setSearchParams({ title: params.title, desc: params.desc });
+      setSearchParams({ title: params.title, desc: params.desc, id: "" });
     } else {
       setSearchParams({ title: params.title, desc: params.desc, id: occupation.id });
     }
@@ -50,7 +54,7 @@ const OccupationAccordion = ({ occupation }: IProps) => {
 
   return (
     <>
-      <DigiExpandableAccordion afHeading={occupation.occupation_label} onClick={handleAccordionClick}>
+      <DigiExpandableAccordion afHeading={occupation.occupation_label} onClick={handleAccordionClick} afExpanded={idParamsCheck()}>
         <div className="m-5 flex flex-col gap-4">
           <DigiTypography>
             <p>taxonomi ID: {occupation.concept_taxonomy_id}</p>
