@@ -1,13 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
 import IOccupations from '../interfaces/IOccupations';
-import { OccupationContext } from '../OccupationsContext';
+import {
+  OccupationContext,
+  OccupationDispatchContext,
+} from '../OccupationsContext';
 import { DigiTypography } from '@digi/arbetsformedlingen-react';
 import { TypographyVariation } from '@digi/arbetsformedlingen';
 import OccupationAccordion from '../components/OccupationAccordion';
+import { EduToWorkData } from '../service/EduToWorkService';
 
 const SearchResults = () => {
   const context = useContext(OccupationContext);
   const [occupations, setOccupations] = useState<IOccupations>();
+  const searchService = EduToWorkData();
   const dispatch = useContext(OccupationDispatchContext);
 
   useEffect(() => {
@@ -16,6 +21,7 @@ const SearchResults = () => {
     };
     updateOccupations();
   });
+
   const fetchMoreOccupations = async () => {
     const result: IOccupations = await searchService.fetchWorkTitles(
       String(context?.state.headlineInput),
@@ -43,6 +49,16 @@ const SearchResults = () => {
             <OccupationAccordion occupation={occupation} key={index} />
           </div>
         ))}
+        {context?.state.occupations && (
+          <button
+            className='w-[345px] tablet:w-[545px] bg-white py-3 border-2 border-primary rounded-b-lg'
+            onClick={fetchMoreOccupations}
+          >
+            {context?.state.occupations?.hits_returned < 10
+              ? 'Tillbaka'
+              : 'Visa mer...'}
+          </button>
+        )}
       </>
     );
   }
