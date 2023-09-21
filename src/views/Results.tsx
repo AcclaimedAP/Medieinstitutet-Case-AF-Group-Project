@@ -8,6 +8,7 @@ import OccupationAccordion from '../components/OccupationAccordion';
 const SearchResults = () => {
   const context = useContext(OccupationContext);
   const [occupations, setOccupations] = useState<IOccupations>();
+  const dispatch = useContext(OccupationDispatchContext);
 
   useEffect(() => {
     const updateOccupations = () => {
@@ -15,6 +16,21 @@ const SearchResults = () => {
     };
     updateOccupations();
   });
+  const fetchMoreOccupations = async () => {
+    const result: IOccupations = await searchService.fetchWorkTitles(
+      String(context?.state.headlineInput),
+      String(context?.state.textInput),
+      context?.state.occupations?.related_occupations.length
+    );
+
+    const payload = {
+      occupations: result,
+      headlineInput: String(context?.state.headlineInput),
+      textInput: String(context?.state.textInput),
+    };
+
+    dispatch({ payload, type: 'updated' });
+  };
 
   function OccupationMap(occupationsList: IOccupations) {
     return (

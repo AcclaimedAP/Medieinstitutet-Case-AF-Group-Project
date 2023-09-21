@@ -37,7 +37,13 @@ const SearchForm = () => {
       textInput
     );
 
-    dispatch({ payload: result, type: 'updated' });
+    const payload = {
+      occupations: result,
+      headlineInput: headlineInput,
+      textInput: textInput,
+    };
+
+    dispatch({ payload, type: 'updated' });
     navigate('/search');
     setIsButtonClicked(true);
   }
