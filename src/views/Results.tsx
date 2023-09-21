@@ -20,7 +20,7 @@ const SearchResults = () => {
     return (
       <>
         {occupationsList.related_occupations.map((occupation, index) => (
-          <div key={index}>
+          <div key={index} className='bg-white mb-2 pl-1 border border-primary rounded-lg'>
             <OccupationAccordion occupation={occupation} key={index} />
           </div>
         ))}
@@ -34,9 +34,9 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className='bg-accent flex flex-col items-center justify-center h-auto w-auto p-10 absolute right-0 translate-x-[-100px] border border-primary rounded-lg'>
+      <div className='bg-accent flex flex-col items-center justify-center h-auto w-auto p-10 mt-7 absolute right-0 translate-x-[-100px] border-2 border-primary rounded-lg'>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
-          <h1>
+          <h1 className='text-primary'>
             Sökresultat, hittade {occupations.hits_total}st, visar {occupations.hits_returned}st
           </h1>
         </DigiTypography>

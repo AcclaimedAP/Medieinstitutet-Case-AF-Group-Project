@@ -45,11 +45,11 @@ const SearchForm = () => {
   return (
     <>
       <div className='bg-desktopBackground !important'>
-      <div className={`bg-primary p-10 h-85 w-1/3 flex flex-col items-center form rounded-lg fixed top-1/2 ${
+      <div className={`bg-primary p-10 h-auto w-1/3 flex flex-col items-center form rounded-lg fixed mt-250 ${
         isButtonClicked ? 'left-100' : 'left-1/2 transform -translate-x-1/2'
         } -translate-y-1/2`}
       >
-        <h2 className='text-white text-h3 pb-6'>Sök efter tjänster utifrån utbildning</h2>
+        <h2 className='text-white text-h3 pb-6'>Sök efter yrken utifrån utbildning</h2>
         <DigiFormInput
           className='w-full'
           afLabel='Utbildningstitel'
