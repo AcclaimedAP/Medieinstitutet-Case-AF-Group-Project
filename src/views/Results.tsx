@@ -37,7 +37,7 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className='bg-whiteDark flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:translate-x-[-100px]  laptop:rounded-lg'>
+      <div className='bg-whiteDark laptop:opacity-90 flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-20 laptop:translate-x-[-100px] laptop:rounded-lg'>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h1 className='text-primary'>
             Sökresultat, hittade {occupations.hits_total}st, visar{' '}
