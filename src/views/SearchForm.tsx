@@ -48,9 +48,18 @@ const SearchForm = () => {
 
     setErrorMessage("");
     const result: IOccupations = await searchService.fetchWorkTitles(title, description);
+
+    const payload = {
+      occupations: result,
+      headlineInput: headlineInput,
+      textInput: textInput,
+    };
+    
     dispatch({ payload: result, type: "updated" });
-    navigate("/search");
+    navigate('/search');
+    
     const id = searchParams.get("id") || "";
+
     setIsButtonClicked(true);
     setSearchParams({ title: title, desc: description, id: id });
   }

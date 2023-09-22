@@ -1,23 +1,41 @@
 import { useReducer } from 'react';
 import IOccupations from '../interfaces/IOccupations';
-import { OccupationContext, OccupationDispatchContext } from '../OccupationsContext';
+import {
+  OccupationContext,
+  OccupationDispatchContext,
+} from '../OccupationsContext';
 
 interface IAction {
-  payload: IOccupations,
-  type: string
-}
-interface IState {
-  occupations: IOccupations | undefined
+  payload: {
+    occupations?: IOccupations;
+    headlineInput: string;
+    textInput: string;
+  };
+  type: string;
 }
 
-const initialState: IState = {occupations: undefined}
+interface IState {
+  occupations: IOccupations | undefined;
+  headlineInput: string;
+  textInput: string;
+}
+
+const initialState: IState = {
+  occupations: undefined,
+  headlineInput: '',
+  textInput: '',
+};
 
 function OccupationReducer(_state: IState, action: IAction): IState {
   switch (action.type) {
     case 'updated': {
-      return {occupations: action.payload};
+      return {
+        occupations: action.payload.occupations,
+        headlineInput: action.payload.headlineInput,
+        textInput: action.payload.textInput,
+      };
     }
-    case 'deleted': { 
+    case 'deleted': {
       return initialState;
     }
     default: {
@@ -29,7 +47,7 @@ function OccupationReducer(_state: IState, action: IAction): IState {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function OccupationProvider({ children }: any) {
   const [state, dispatch] = useReducer(OccupationReducer, initialState);
-  
+
   return (
     <OccupationContext.Provider value={{ state }}>
       <OccupationDispatchContext.Provider value={dispatch}>
