@@ -8,6 +8,7 @@ import { DigiTypography } from '@digi/arbetsformedlingen-react';
 import { TypographyVariation } from '@digi/arbetsformedlingen';
 import OccupationAccordion from '../components/OccupationAccordion';
 import { EduToWorkData } from '../service/EduToWorkService';
+import { calculatePages } from '../utilities/CalculatePagination';
 
 const SearchResults = () => {
   const context = useContext(OccupationContext);
@@ -22,11 +23,11 @@ const SearchResults = () => {
     updateOccupations();
   });
 
-  const fetchMoreOccupations = async () => {
+  const fetchMoreOccupations = async (page: number) => {
     const result: IOccupations = await searchService.fetchWorkTitles(
       String(context?.state.headlineInput),
       String(context?.state.textInput),
-      context?.state.occupations?.related_occupations.length
+      page * 10
     );
 
     const payload = {
@@ -49,16 +50,20 @@ const SearchResults = () => {
             <OccupationAccordion occupation={occupation} key={index} />
           </div>
         ))}
-        {context?.state.occupations && (
-          <button
-            className='w-[345px] tablet:w-[545px] bg-white py-3 border-2 border-primary rounded-b-lg'
-            onClick={fetchMoreOccupations}
-          >
-            {context?.state.occupations?.hits_returned < 10
-              ? 'Tillbaka'
-              : 'Visa mer...'}
-          </button>
-        )}
+        <div className='flex gap-2 justify-center w-full mt-4'>
+          {context?.state.occupations &&
+            Array.from({
+              length: calculatePages(context.state.occupations.hits_total),
+            }).map((val, index) => (
+              <button
+                key={index}
+                className='px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white'
+                onClick={() => fetchMoreOccupations(index)}
+              >
+                {index + 1}
+              </button>
+            ))}
+        </div>
       </>
     );
   }
@@ -83,3 +88,7 @@ const SearchResults = () => {
 };
 
 export default SearchResults;
+
+// context?.state.occupations?.hits_returned är 45
+// resultatet ska bli 5 sidor, 4 med 10 hits och en sista med 5 hits
+//
