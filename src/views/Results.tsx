@@ -9,21 +9,47 @@ import { TypographyVariation } from '@digi/arbetsformedlingen';
 import OccupationAccordion from '../components/OccupationAccordion';
 import { EduToWorkData } from '../service/EduToWorkService';
 import { calculatePages } from '../utilities/CalculatePagination';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchResults = () => {
   const context = useContext(OccupationContext);
-  const [occupations, setOccupations] = useState<IOccupations>();
   const searchService = EduToWorkData();
   const dispatch = useContext(OccupationDispatchContext);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const updateOccupations = () => {
-      setOccupations(context?.state.occupations);
-    };
-    updateOccupations();
-  });
+    const fetchData = async () => {
+      const params = {
+        title: searchParams.get('title'),
+        desc: searchParams.get('desc'),
+        page: searchParams.get('page'),
+      };
 
-  const fetchMoreOccupations = async (page: number) => {
+      if (params.title && params.desc) {
+        const result = await searchService.fetchWorkTitles(
+          params.title!,
+          params.desc!,
+          (Number(params.page) - 1) * 10
+        );
+
+        const payload = {
+          occupations: result,
+          headlineInput: params.title,
+          textInput: params.desc,
+        };
+
+        dispatch({ payload, type: 'updated' });
+      }
+    };
+    fetchData();
+  }, [
+    searchParams.get('title'),
+    searchParams.get('desc'),
+    searchParams.get('page'),
+  ]);
+
+  const changePage = async (page: number) => {
+    console.log(page);
     const result: IOccupations = await searchService.fetchWorkTitles(
       String(context?.state.headlineInput),
       String(context?.state.textInput),
@@ -37,6 +63,12 @@ const SearchResults = () => {
     };
 
     dispatch({ payload, type: 'updated' });
+
+    setSearchParams({
+      title: payload.headlineInput,
+      desc: payload.textInput,
+      page: (page + 1).toString(),
+    });
   };
 
   function OccupationMap(occupationsList: IOccupations) {
@@ -61,6 +93,7 @@ const SearchResults = () => {
                   Number(searchParams.get('page')) === index + 1 &&
                   '!bg-primary !text-whiteDark'
                 }`}
+                onClick={() => changePage(index)}
               >
                 {index + 1}
               </button>
