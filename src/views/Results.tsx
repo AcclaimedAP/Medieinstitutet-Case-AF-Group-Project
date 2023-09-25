@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import IOccupations from '../interfaces/IOccupations';
 import {
   OccupationContext,
@@ -70,7 +70,7 @@ const SearchResults = () => {
     );
   }
 
-  if (!occupations) {
+  if (!context?.state.occupations) {
     return null;
   }
 
@@ -79,11 +79,13 @@ const SearchResults = () => {
       <div className='bg-whiteDark laptop:opacity-90 flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-20 laptop:translate-x-[-100px] laptop:rounded-lg'>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h1 className='text-primary'>
-            Sökresultat, hittade {occupations.hits_total}st, visar{' '}
-            {occupations.hits_returned}st
+            Sökresultat, hittade {context.state.occupations.hits_total}st, visar{' '}
+            {context.state.occupations.hits_returned}st
           </h1>
         </DigiTypography>
-        <OccupationMap {...occupations}></OccupationMap>
+        {context?.state.occupations && (
+          <OccupationMap {...context?.state.occupations}></OccupationMap>
+        )}
       </div>
     </>
   );
