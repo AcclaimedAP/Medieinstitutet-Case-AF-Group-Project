@@ -57,8 +57,10 @@ const SearchResults = () => {
             }).map((val, index) => (
               <button
                 key={index}
-                className='px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white'
-                onClick={() => fetchMoreOccupations(index)}
+                className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
+                  Number(searchParams.get('page')) === index + 1 &&
+                  '!bg-primary !text-whiteDark'
+                }`}
               >
                 {index + 1}
               </button>
