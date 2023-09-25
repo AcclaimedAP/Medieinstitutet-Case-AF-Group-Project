@@ -49,7 +49,18 @@ const SearchForm = () => {
     const id = searchParams.get("id") || "";
 
     setIsButtonClicked(true);
-    setSearchParams({ title: title, desc: description, id: id });
+
+    const id = searchParams.get('id') || '';
+
+    if (id) {
+      return setSearchParams({
+        title: title,
+        desc: description,
+        page: '1',
+        id: id,
+      });
+    }
+    setSearchParams({ title: title, desc: description, page: '1' });
   }
 
   return (
