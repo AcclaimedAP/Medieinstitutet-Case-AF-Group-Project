@@ -47,9 +47,18 @@ const OccupationAccordion = ({ occupation }: IProps) => {
       return;
     }
     if (params.id === occupation.id) {
-      setSearchParams({ title: params.title, desc: params.desc, id: "" });
+      setSearchParams({
+        title: params.title,
+        desc: params.desc,
+        page: params.page,
+      });
     } else {
-      setSearchParams({ title: params.title, desc: params.desc, id: occupation.id });
+      setSearchParams({
+        title: params.title,
+        desc: params.desc,
+        page: params.page,
+        id: occupation.id,
+      });
     }
   };
 
