@@ -4,8 +4,9 @@ import SearchForm from './SearchForm';
 const Search = () => {
   return (
     <>
+      <section className='tablet:hidden relative'>
       <SearchForm></SearchForm>
-      <SearchResults></SearchResults>
+      </section>
     </>
   );
 };
