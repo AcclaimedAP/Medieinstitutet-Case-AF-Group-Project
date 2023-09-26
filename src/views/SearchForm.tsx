@@ -83,7 +83,7 @@ const SearchForm = () => {
         }`}
       >
         <div
-          className={`bg-primary min-w-[320px] p-6 gap-4 h-auto flex flex-col items-center form laptop:w-1/3 laptop:rounded-lg laptop:fixed laptop:mt-260 ${
+          className={`bg-primary pb-16 tablet:pb-6 min-w-[320px] p-6 gap-4 h-auto flex flex-col items-center form laptop:w-1/3 laptop:rounded-lg laptop:fixed laptop:mt-260 ${
             isButtonClicked
               ? 'laptop:left-[100px]'
               : 'laptop:left-1/2 laptop:transform laptop:-translate-x-1/2'
