@@ -50,6 +50,9 @@ const Search = () => {
           }`}
         >
           <button
+            aria-label={
+              context?.state.isMenuOpen ? 'Stäng sökruta' : 'Öppna sökruta'
+            }
             className={`${
               context?.state.isMenuOpen
                 ? 'bg-accent absolute bottom-0'
