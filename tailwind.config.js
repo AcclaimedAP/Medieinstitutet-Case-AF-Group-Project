@@ -43,7 +43,7 @@ export default {
 
     screens: {
       tablet: '640px',
-      laptop: '1024px',
+      laptop: '1280px',
     },
   },
 
