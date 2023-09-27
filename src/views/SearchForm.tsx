@@ -52,8 +52,8 @@ const SearchForm = () => {
 
     const payload = {
       occupations: result,
-      headlineInput: headlineInput,
-      textInput: textInput,
+      headlineInput: title,
+      textInput: description,
     };
 
     dispatch({ payload, type: 'updated' });
