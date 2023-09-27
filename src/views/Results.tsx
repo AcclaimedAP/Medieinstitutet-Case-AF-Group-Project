@@ -1,9 +1,14 @@
-import { useContext, useEffect } from 'react';
-import IOccupations from '../interfaces/IOccupations';
+import { 
+  useContext, 
+  useEffect 
+} from 'react';
+
 import {
   OccupationContext,
   OccupationDispatchContext,
 } from '../OccupationsContext';
+
+import IOccupations from '../interfaces/IOccupations';
 import { DigiTypography } from '@digi/arbetsformedlingen-react';
 import { TypographyVariation } from '@digi/arbetsformedlingen';
 import OccupationAccordion from '../components/OccupationAccordion';
@@ -89,6 +94,7 @@ const SearchResults = () => {
             }).map((val, index) => (
               <button
                 key={index}
+                aria-label={`Go to page ${index + 1}`}
                 className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
                   Number(searchParams.get('page')) === index + 1 &&
                   '!bg-primary !text-whiteDark'

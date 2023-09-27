@@ -1,7 +1,6 @@
 import { 
   useContext, 
   useEffect, 
-  useRef, 
   useState 
 } from 'react';
 
@@ -38,8 +37,6 @@ const SearchForm = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const inputFocus = useRef<HTMLDigiFormInputElement | null>(null);
-  const buttonFocus = useRef<HTMLDigiButtonElement | null>(null);
 
   useEffect(() => {
     const title = searchParams.get('title');
@@ -51,33 +48,6 @@ const SearchForm = () => {
       workTitles(title, desc);
     }
   }, []);
-
-  useEffect(() => {
-    const buttonElement = buttonFocus.current;
-    const inputElement = inputFocus.current;
-
-    const handleButtonKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab' && !e.shiftKey) {
-        e.preventDefault();
-        inputElement?.focus();
-      }
-    };
-
-    const handleInputKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Tab' && e.shiftKey) {
-        e.preventDefault();
-        buttonElement?.focus();
-      }
-    };
-  
-    if (buttonElement) {
-      buttonElement.addEventListener('keydown', handleButtonKeyDown);
-    }
-
-    if (inputElement) {
-      inputElement.addEventListener('keydown', handleInputKeyDown);
-    }
-  }, [inputFocus, buttonFocus]);
 
   async function workTitles(title: string, description: string) {
     console.log('worktitles: ', title, description);
@@ -143,7 +113,6 @@ const SearchForm = () => {
             afAriaLabelledby='Lägg till utbildningstitel'
             value={headlineInput}
             onAfOnChange={(e) => setHeadlineInput(String(e.target.value))}
-            ref={inputFocus}
           />
           <DigiFormTextarea
             className='w-full'
@@ -170,7 +139,6 @@ const SearchForm = () => {
             }}
             afVariation={ButtonVariation.PRIMARY}
             aria-label='Sök efter yrken'
-            ref={buttonFocus}
           >
             Sök
           </DigiButton>
