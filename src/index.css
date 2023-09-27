@@ -10,24 +10,28 @@
   color: #f1f1f1;
 }
 
+.form button {
+  background-color: #111a31 !important;
+}
+
 .form button span {
-  color: #95c23e;
+  color: #14b8a6;
 }
 
 .form button:hover span {
-  color: #00005a !important;
+  color: #0f172a !important;
 }
 
 .form button:hover {
-  background-color: #95c23e !important;
+  background-color: #14b8a6 !important;
 }
 
 .arrow-icon-up svg {
-  color: #95c23e !important;
+  color: #14b8a6 !important;
 }
 
 .arrow-icon-down svg {
-  color: #00005a !important;
+  color: #0f172a !important;
 }
 
 button {
