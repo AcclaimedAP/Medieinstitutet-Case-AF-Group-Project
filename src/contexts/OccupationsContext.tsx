@@ -6,6 +6,7 @@ interface IAction {
     occupations?: IOccupations;
     headlineInput: string;
     textInput: string;
+    currentPage?: string;
   };
   type: string;
 }
@@ -14,6 +15,7 @@ interface IState {
   occupations: IOccupations | undefined;
   headlineInput: string;
   textInput: string;
+  currentPage: string;
 }
 
 export const OccupationContext = createContext<{ state: IState } | null>(null);
