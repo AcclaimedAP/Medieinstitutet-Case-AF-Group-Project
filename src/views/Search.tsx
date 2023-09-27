@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import SearchResults from './Results';
 import SearchForm from './SearchForm';
 import {
   DigiIconArrowUp,
   DigiIconArrowDown,
 } from '@digi/arbetsformedlingen-react';
+import {
+  ShowSearchContext,
+  ShowSearchDispatchContext,
+} from '../contexts/ShowSearchContext';
+import { ToggleSearch } from '../models/ToggleSearchEnum';
 
 const Search = () => {
+  const context = useContext(ShowSearchContext);
+  const dispatch = useContext(ShowSearchDispatchContext);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   const toggleSearchWindow = () => {

@@ -3,7 +3,7 @@ import IOccupations from '../interfaces/IOccupations';
 import {
   OccupationContext,
   OccupationDispatchContext,
-} from '../OccupationsContext';
+} from '../contexts/OccupationsContext';
 
 interface IAction {
   payload: {

@@ -3,13 +3,16 @@ import '@digi/arbetsformedlingen/dist/digi-arbetsformedlingen/digi-arbetsformedl
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import OccupationProvider from './reducers/OccupationReducer';
+import ShowSearchProvider from './reducers/ShowSearchReducer';
 
 function App() {
   return (
     <>
-      <OccupationProvider>
-        <RouterProvider router={router}></RouterProvider>
-      </OccupationProvider>
+      <ShowSearchProvider>
+        <OccupationProvider>
+          <RouterProvider router={router}></RouterProvider>
+        </OccupationProvider>
+      </ShowSearchProvider>
     </>
   );
 }
