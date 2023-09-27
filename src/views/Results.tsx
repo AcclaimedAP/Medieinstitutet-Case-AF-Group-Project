@@ -4,8 +4,12 @@ import {
   OccupationContext,
   OccupationDispatchContext,
 } from '../contexts/OccupationsContext';
-import { DigiTypography } from '@digi/arbetsformedlingen-react';
-import { TypographyVariation } from '@digi/arbetsformedlingen';
+import { DigiFormSelect, DigiTypography } from '@digi/arbetsformedlingen-react';
+import {
+  FormSelectValidation,
+  FormSelectVariation,
+  TypographyVariation,
+} from '@digi/arbetsformedlingen';
 import OccupationAccordion from '../components/OccupationAccordion';
 import { EduToWorkData } from '../service/EduToWorkService';
 import { calculatePages } from '../utilities/CalculatePagination';
@@ -66,9 +70,10 @@ const SearchResults = () => {
       occupations: result,
       headlineInput: String(context?.state.headlineInput),
       textInput: String(context?.state.textInput),
+      currentPage: page.toString(),
     };
 
-    dispatch({ payload, type: 'updated' });
+    dispatch({ payload, type: 'changePage' });
 
     setSearchParams({
       title: payload.headlineInput,
@@ -92,24 +97,47 @@ const SearchResults = () => {
             <OccupationAccordion occupation={occupation} key={index} />
           </div>
         ))}
-        <div className='flex gap-2 justify-center w-full mt-4'>
-          {context?.state.occupations &&
-            Array.from({
-              length: calculatePages(context.state.occupations.hits_total),
-            }).map((_, index) => (
-              <button
-                key={index}
-                aria-label={`Visa sida ${index + 1}`}
-                className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
-                  Number(searchParams.get('page')) === index + 1 &&
-                  '!bg-primary !text-whiteDark'
-                }`}
-                onClick={() => changePage(index)}
+        {context?.state.occupations && (
+          <div className='flex gap-2 justify-center w-full mt-4'>
+            {context.state.occupations.hits_total < 51 ? (
+              Array.from({
+                length: calculatePages(context.state.occupations.hits_total),
+              }).map((_, index) => (
+                <button
+                  key={index}
+                  aria-label={`Visa sida ${index + 1}`}
+                  className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
+                    Number(searchParams.get('page')) === index + 1 &&
+                    '!bg-primary !text-whiteDark'
+                  }`}
+                  onClick={() => changePage(index)}
+                >
+                  {index + 1}
+                </button>
+              ))
+            ) : (
+              <DigiFormSelect
+                afLabel='Välj sida'
+                afVariation={FormSelectVariation.MEDIUM}
+                afValidation={FormSelectValidation.NEUTRAL}
+                afValue={context.state.currentPage}
+                onAfOnChange={(e) => changePage(Number(e.target.value))}
               >
-                {index + 1}
-              </button>
-            ))}
-        </div>
+                {Array.from({
+                  length: calculatePages(context.state.occupations.hits_total),
+                }).map((_, index) => (
+                  <option
+                    value={`${index}`}
+                    key={index}
+                    aria-label={`Visa sida ${index + 1}`}
+                  >
+                    {index + 1}
+                  </option>
+                ))}
+              </DigiFormSelect>
+            )}
+          </div>
+        )}
       </>
     );
   }
