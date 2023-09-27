@@ -16,7 +16,9 @@ const SearchResults = () => {
   const searchService = EduToWorkData();
   const dispatch = useContext(OccupationDispatchContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [pagesShowing, setPagesShowing] = useState<string>('');
+  const [pagesShowing, setPagesShowing] = useState<string>(
+    `1 - ${context?.state.occupations?.hits_returned}`
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +45,6 @@ const SearchResults = () => {
           headlineInput: params.title,
           textInput: params.desc,
         };
-
         dispatch({ payload, type: 'updated' });
       }
     };
