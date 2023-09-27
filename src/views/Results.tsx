@@ -1,15 +1,12 @@
-import { useContext, useEffect } from 'react';
-import IOccupations from '../interfaces/IOccupations';
-import {
-  OccupationContext,
-  OccupationDispatchContext,
-} from '../OccupationsContext';
-import { DigiTypography } from '@digi/arbetsformedlingen-react';
-import { TypographyVariation } from '@digi/arbetsformedlingen';
-import OccupationAccordion from '../components/OccupationAccordion';
-import { EduToWorkData } from '../service/EduToWorkService';
-import { calculatePages } from '../utilities/CalculatePagination';
-import { useSearchParams } from 'react-router-dom';
+import { useContext, useEffect } from "react";
+import IOccupations from "../interfaces/IOccupations";
+import { OccupationContext, OccupationDispatchContext } from "../OccupationsContext";
+import { DigiTypography } from "@digi/arbetsformedlingen-react";
+import { TypographyVariation } from "@digi/arbetsformedlingen";
+import OccupationAccordion from "../components/OccupationAccordion";
+import { EduToWorkData } from "../service/EduToWorkService";
+import { calculatePages } from "../utilities/CalculatePagination";
+import { useSearchParams } from "react-router-dom";
 
 const SearchResults = () => {
   const context = useContext(OccupationContext);
@@ -20,17 +17,13 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchData = async () => {
       const params = {
-        title: searchParams.get('title'),
-        desc: searchParams.get('desc'),
-        page: searchParams.get('page'),
+        title: searchParams.get("title"),
+        desc: searchParams.get("desc"),
+        page: searchParams.get("page"),
       };
 
       if (params.title && params.desc) {
-        const result = await searchService.fetchWorkTitles(
-          params.title!,
-          params.desc!,
-          (Number(params.page) - 1) * 10
-        );
+        const result = await searchService.fetchWorkTitles(params.title!, params.desc!, (Number(params.page) - 1) * 10);
 
         const payload = {
           occupations: result,
@@ -38,23 +31,15 @@ const SearchResults = () => {
           textInput: params.desc,
         };
 
-        dispatch({ payload, type: 'updated' });
+        dispatch({ payload, type: "updated" });
       }
     };
     fetchData();
-  }, [
-    searchParams.get('title'),
-    searchParams.get('desc'),
-    searchParams.get('page'),
-  ]);
+  }, [searchParams.get("title"), searchParams.get("desc"), searchParams.get("page")]);
 
   const changePage = async (page: number) => {
     console.log(page);
-    const result: IOccupations = await searchService.fetchWorkTitles(
-      String(context?.state.headlineInput),
-      String(context?.state.textInput),
-      page * 10
-    );
+    const result: IOccupations = await searchService.fetchWorkTitles(String(context?.state.headlineInput), String(context?.state.textInput), page * 10);
 
     const payload = {
       occupations: result,
@@ -62,7 +47,7 @@ const SearchResults = () => {
       textInput: String(context?.state.textInput),
     };
 
-    dispatch({ payload, type: 'updated' });
+    dispatch({ payload, type: "updated" });
 
     setSearchParams({
       title: payload.headlineInput,
@@ -79,7 +64,10 @@ const SearchResults = () => {
             key={index}
             className='bg-white mb-2 pl-1 border border-primary rounded-lg'
           >
-            <OccupationAccordion occupation={occupation} key={index} />
+            <OccupationAccordion
+              occupation={occupation}
+              key={index}
+            />
           </div>
         ))}
         <div className='flex gap-2 justify-center w-full mt-4'>
@@ -89,10 +77,7 @@ const SearchResults = () => {
             }).map((val, index) => (
               <button
                 key={index}
-                className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
-                  Number(searchParams.get('page')) === index + 1 &&
-                  '!bg-primary !text-whiteDark'
-                }`}
+                className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${Number(searchParams.get("page")) === index + 1 && "!bg-primary !text-whiteDark"}`}
                 onClick={() => changePage(index)}
               >
                 {index + 1}
@@ -109,16 +94,13 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className='bg-whiteDark laptop:opacity-90 flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-20 laptop:translate-x-[-100px] laptop:rounded-lg'>
+      <div className='bg-whiteDark laptop:opacity-90 flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-0 laptop:translate-x-[-100px] laptop:rounded-lg'>
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h1 className='text-primary'>
-            Sökresultat, hittade {context.state.occupations.hits_total}st, visar{' '}
-            {context.state.occupations.hits_returned}st
+            Sökresultat, hittade {context.state.occupations.hits_total}st, visar {context.state.occupations.hits_returned}st
           </h1>
         </DigiTypography>
-        {context?.state.occupations && (
-          <OccupationMap {...context?.state.occupations}></OccupationMap>
-        )}
+        {context?.state.occupations && <OccupationMap {...context?.state.occupations}></OccupationMap>}
       </div>
     </>
   );
