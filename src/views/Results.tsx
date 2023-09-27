@@ -1,13 +1,15 @@
-import { useContext, useEffect } from "react";
-import IOccupations from "../interfaces/IOccupations";
-import { OccupationContext, OccupationDispatchContext } from "../OccupationsContext";
-import { DigiTypography } from "@digi/arbetsformedlingen-react";
-import { TypographyVariation } from "@digi/arbetsformedlingen";
-import OccupationAccordion from "../components/OccupationAccordion";
-import { EduToWorkData } from "../service/EduToWorkService";
-import { calculatePages } from "../utilities/CalculatePagination";
-import { useSearchParams } from "react-router-dom";
-
+import { useContext, useEffect } from 'react';
+import IOccupations from '../interfaces/IOccupations';
+import {
+  OccupationContext,
+  OccupationDispatchContext,
+} from '../contexts/OccupationsContext';
+import { DigiTypography } from '@digi/arbetsformedlingen-react';
+import { TypographyVariation } from '@digi/arbetsformedlingen';
+import OccupationAccordion from '../components/OccupationAccordion';
+import { EduToWorkData } from '../service/EduToWorkService';
+import { calculatePages } from '../utilities/CalculatePagination';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchResults = () => {
   const context = useContext(OccupationContext);
@@ -23,8 +25,17 @@ const SearchResults = () => {
         page: searchParams.get("page"),
       };
 
-      if (params.title && params.desc) {
-        const result = await searchService.fetchWorkTitles(params.title!, params.desc!, (Number(params.page) - 1) * 10);
+      if (
+        params.title &&
+        params.desc &&
+        params.title !== context?.state.headlineInput &&
+        params.desc !== context?.state.textInput
+      ) {
+        const result = await searchService.fetchWorkTitles(
+          params.title!,
+          params.desc!,
+          (Number(params.page) - 1) * 10
+        );
 
         const payload = {
           occupations: result,
@@ -75,7 +86,7 @@ const SearchResults = () => {
           {context?.state.occupations &&
             Array.from({
               length: calculatePages(context.state.occupations.hits_total),
-            }).map((val, index) => (
+            }).map((_, index) => (
               <button
                 key={index}
                 aria-label={`Visa sida ${index + 1}`}
@@ -98,10 +109,20 @@ const SearchResults = () => {
 
   return (
     <>
-      <div className='bg-whiteDark laptop:opacity-90 flex flex-col items-center justify-center h-auto w-auto p-10 border-2 border-primary laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-0 laptop:translate-x-[-100px] laptop:rounded-lg'>
+      <div
+        className='bg-whiteDark laptop:opacity-90 min-h-custom flex flex-col items-center justify-center w-auto p-10 border-2 border-primary 
+      pb-16 laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-0 laptop:translate-x-[-100px] laptop:rounded-lg'
+      >
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h1 className='text-primary'>
-            Sökresultat, hittade {context.state.occupations.hits_total}st, visar {context.state.occupations.hits_returned}st
+            {context.state.occupations.hits_total < 1 ? (
+              <>Inga sökresultat</>
+            ) : (
+              <>
+                {context.state.occupations.hits_total} sökresultat, visar{' '}
+                {context.state.occupations.hits_returned}st
+              </>
+            )}
           </h1>
         </DigiTypography>
         {context?.state.occupations && <OccupationMap {...context?.state.occupations}></OccupationMap>}
