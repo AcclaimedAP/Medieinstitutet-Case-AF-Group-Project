@@ -7,20 +7,50 @@ import {
 } from '@digi/arbetsformedlingen-react';
 
 const Search = () => {
-  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const toggleSearchWindow = () => {
+    context?.state.isMenuOpen
+      ? dispatch({ type: ToggleSearch.CLOSED })
+      : dispatch({ type: ToggleSearch.OPENED });
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node) &&
+        context?.state.isMenuOpen
+      ) {
+        dispatch({ type: ToggleSearch.CLOSED });
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [dispatch, context?.state.isMenuOpen]);
 
   return (
     <>
-      <section className='tablet:hidden relative'>
+      <section className='laptop:hidden relative min-h-custom'>
         <SearchResults></SearchResults>
-        <div className={`fixed bottom-0 w-screen ${!menuIsOpen && 'h-12'}`}>
+        <div
+          ref={searchContainerRef}
+          className={`fixed bottom-0 w-screen ${
+            !context?.state.isMenuOpen && 'h-12'
+          }`}
+        >
           <button
             className={`${
-              menuIsOpen ? 'bg-accent absolute bottom-0' : 'bg-primary'
+              context?.state.isMenuOpen
+                ? 'bg-accent absolute bottom-0'
+                : 'bg-primary'
             } h-12 z-20 w-full flex justify-center items-center`}
-            onClick={() => setMenuIsOpen(!menuIsOpen)}
+            onClick={toggleSearchWindow}
           >
-            {menuIsOpen ? (
+            {context?.state.isMenuOpen ? (
               <DigiIconArrowDown className='w-8 h-8 arrow-icon-down' />
             ) : (
               <DigiIconArrowUp className='w-8 h-8 arrow-icon-up' />
@@ -28,7 +58,7 @@ const Search = () => {
           </button>
           <div
             className={`transition-all duration-300 overflow-hidden ${
-              menuIsOpen
+              context?.state.isMenuOpen
                 ? 'translate-y-0 opacity-1 visible'
                 : 'translate-y-full opacity-0 invisible'
             } `}
@@ -38,7 +68,7 @@ const Search = () => {
         </div>
       </section>
 
-      <section className='hidden tablet:block'>
+      <section className='hidden laptop:block'>
         <SearchResults />
         <SearchForm />
       </section>
