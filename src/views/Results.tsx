@@ -55,7 +55,6 @@ const SearchResults = () => {
   ]);
 
   const changePage = async (page: number) => {
-    console.log(page);
     const result: IOccupations = await searchService.fetchWorkTitles(
       String(context?.state.headlineInput),
       String(context?.state.textInput),
@@ -79,7 +78,6 @@ const SearchResults = () => {
     setPagesShowing(
       () => `${page * 10 + 1} - ${page * 10 + result.hits_returned}`
     );
-    console.log(pagesShowing);
   };
 
   function OccupationMap(occupationsList: IOccupations) {
