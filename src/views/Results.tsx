@@ -8,6 +8,7 @@ import { EduToWorkData } from "../service/EduToWorkService";
 import { calculatePages } from "../utilities/CalculatePagination";
 import { useSearchParams } from "react-router-dom";
 
+
 const SearchResults = () => {
   const context = useContext(OccupationContext);
   const searchService = EduToWorkData();
@@ -77,7 +78,10 @@ const SearchResults = () => {
             }).map((val, index) => (
               <button
                 key={index}
-                className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${Number(searchParams.get("page")) === index + 1 && "!bg-primary !text-whiteDark"}`}
+                aria-label={`Visa sida ${index + 1}`}
+                className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
+                  Number(searchParams.get('page')) === index + 1 &&
+                  '!bg-primary !text-whiteDark'}`}
                 onClick={() => changePage(index)}
               >
                 {index + 1}
