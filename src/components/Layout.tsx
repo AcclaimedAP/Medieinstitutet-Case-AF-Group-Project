@@ -12,7 +12,7 @@ export const Layout = () => {
       </header>
 
       <main>
-        <div className={`laptop:bg-desktopBackground laptop:bg-cover h-screen w-screen fixed overflow-scroll top-[80px] left-0`}>
+        <div className={`laptop:bg-desktopBackground laptop:bg-cover h-[calc(100vh-80px)] w-screen fixed overflow-scroll top-[80px] left-0`}>
           <Outlet></Outlet>
         </div>
       </main>
