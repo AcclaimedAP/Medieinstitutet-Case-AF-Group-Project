@@ -1,3 +1,4 @@
+import { BarChartVariation } from '@digi/arbetsformedlingen';
 import { IEnrichedCompetence } from '../interfaces/IRelatedOccupation';
 import { DigiBarChart } from '@digi/arbetsformedlingen-react';
 
@@ -8,17 +9,17 @@ interface IProps {
 const Diagram = ({ diagramData }: IProps) => {
   const chartLineSeries = {
     yValues: diagramData.map((data) => data.percent_for_occupation),
-    title: 'Procent',
+    title: '%',
   };
 
   const chartData = {
     data: {
-      xValues: diagramData.map((data, index) => index + 1),
+      xValues: diagramData.map((_, index) => index + 1),
       series: [chartLineSeries],
       xValueNames: diagramData.map((data) => data.term.toString()),
     },
-    x: '%',
-    y: 'Kompetens',
+    x: 'Kompetens',
+    y: '%',
     title: 'Mest efterfrågade kompetenserna inom detta yrke, visat i %',
   };
 
@@ -26,7 +27,7 @@ const Diagram = ({ diagramData }: IProps) => {
     <>
       <DigiBarChart
         afChartData={chartData}
-        afVariation={'horizontal'}
+        afVariation={'horizontal' as BarChartVariation}
       ></DigiBarChart>
     </>
   );
