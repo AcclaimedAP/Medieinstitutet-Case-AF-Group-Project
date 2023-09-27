@@ -6,8 +6,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#00005A',
-        accent: '#95C23E',
+        primary: '#0f172a',
+        accent: '#14b8a6',
         white: '#fafafa',
         whiteDark: '#F1F1F1',
       },
@@ -34,6 +34,10 @@ export default {
         300: '300px',
         500: '500px',
         600: '600px',
+      },
+
+      minHeight: {
+        custom: 'calc(100vh - 80px)',
       },
     },
 
