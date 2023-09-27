@@ -11,6 +11,7 @@ import { EduToWorkData } from '../service/EduToWorkService';
 import LoadingSpinner from './LoadingSpinner';
 import { TypographyVariation } from '@digi/arbetsformedlingen';
 import { useSearchParams } from 'react-router-dom';
+import { DigiExpandableAccordionCustomEvent } from '@digi/arbetsformedlingen/dist/types/components';
 
 interface IProps {
   occupation: IRelatedOccupation;
@@ -50,9 +51,9 @@ const OccupationAccordion = ({ occupation }: IProps) => {
     }
   }, [isExpanded]);
 
-  const handleAccordionClick: React.MouseEventHandler<
-    HTMLDigiExpandableAccordionElement
-  > = () => {
+  const handleAccordionClick = (
+    e: DigiExpandableAccordionCustomEvent<MouseEvent>
+  ) => {
     const params = {
       title: searchParams.get('title') || '',
       desc: searchParams.get('desc') || '',
@@ -60,7 +61,11 @@ const OccupationAccordion = ({ occupation }: IProps) => {
       id: searchParams.get('id') || '',
     };
     setIsExpanded((prev) => !prev);
-    if (!params.title || !params.desc) {
+    if (
+      !params.title ||
+      !params.desc ||
+      e.target.classList.contains('buttonWrapper')
+    ) {
       return;
     }
     if (params.id === occupation.id) {
@@ -83,7 +88,7 @@ const OccupationAccordion = ({ occupation }: IProps) => {
     <>
       <DigiExpandableAccordion
         afHeading={occupation.occupation_label}
-        onClick={handleAccordionClick}
+        onAfOnClick={handleAccordionClick}
         afExpanded={idParamsCheck()}
       >
         <div className='m-5 flex flex-col gap-4'>
