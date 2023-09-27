@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import IOccupations from '../interfaces/IOccupations';
 import {
   OccupationContext,
@@ -16,13 +16,14 @@ const SearchResults = () => {
   const searchService = EduToWorkData();
   const dispatch = useContext(OccupationDispatchContext);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [pagesShowing, setPagesShowing] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
       const params = {
-        title: searchParams.get("title"),
-        desc: searchParams.get("desc"),
-        page: searchParams.get("page"),
+        title: searchParams.get('title'),
+        desc: searchParams.get('desc'),
+        page: searchParams.get('page'),
       };
 
       if (
@@ -43,15 +44,23 @@ const SearchResults = () => {
           textInput: params.desc,
         };
 
-        dispatch({ payload, type: "updated" });
+        dispatch({ payload, type: 'updated' });
       }
     };
     fetchData();
-  }, [searchParams.get("title"), searchParams.get("desc"), searchParams.get("page")]);
+  }, [
+    searchParams.get('title'),
+    searchParams.get('desc'),
+    searchParams.get('page'),
+  ]);
 
   const changePage = async (page: number) => {
     console.log(page);
-    const result: IOccupations = await searchService.fetchWorkTitles(String(context?.state.headlineInput), String(context?.state.textInput), page * 10);
+    const result: IOccupations = await searchService.fetchWorkTitles(
+      String(context?.state.headlineInput),
+      String(context?.state.textInput),
+      page * 10
+    );
 
     const payload = {
       occupations: result,
@@ -59,13 +68,18 @@ const SearchResults = () => {
       textInput: String(context?.state.textInput),
     };
 
-    dispatch({ payload, type: "updated" });
+    dispatch({ payload, type: 'updated' });
 
     setSearchParams({
       title: payload.headlineInput,
       desc: payload.textInput,
       page: (page + 1).toString(),
     });
+
+    setPagesShowing(
+      () => `${page * 10 + 1} - ${page * 10 + result.hits_returned}`
+    );
+    console.log(pagesShowing);
   };
 
   function OccupationMap(occupationsList: IOccupations) {
@@ -76,10 +90,7 @@ const SearchResults = () => {
             key={index}
             className='bg-white mb-2 pl-1 border border-primary rounded-lg'
           >
-            <OccupationAccordion
-              occupation={occupation}
-              key={index}
-            />
+            <OccupationAccordion occupation={occupation} key={index} />
           </div>
         ))}
         <div className='flex gap-2 justify-center w-full mt-4'>
@@ -92,7 +103,8 @@ const SearchResults = () => {
                 aria-label={`Visa sida ${index + 1}`}
                 className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
                   Number(searchParams.get('page')) === index + 1 &&
-                  '!bg-primary !text-whiteDark'}`}
+                  '!bg-primary !text-whiteDark'
+                }`}
                 onClick={() => changePage(index)}
               >
                 {index + 1}
@@ -119,13 +131,15 @@ const SearchResults = () => {
               <>Inga sökresultat</>
             ) : (
               <>
-                {context.state.occupations.hits_total} sökresultat, visar{' '}
-                {context.state.occupations.hits_returned}st
+                Totalt {context.state.occupations.hits_total} sökresultat, visar{' '}
+                {pagesShowing}
               </>
             )}
           </h1>
         </DigiTypography>
-        {context?.state.occupations && <OccupationMap {...context?.state.occupations}></OccupationMap>}
+        {context?.state.occupations && (
+          <OccupationMap {...context?.state.occupations}></OccupationMap>
+        )}
       </div>
     </>
   );
