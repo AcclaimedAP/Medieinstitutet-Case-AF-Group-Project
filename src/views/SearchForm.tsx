@@ -1,10 +1,20 @@
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { 
+  useContext, 
+  useEffect, 
+  useState 
+} from 'react';
+
+import { 
+  useNavigate, 
+  useSearchParams 
+} from 'react-router-dom';
+
 import {
   DigiButton,
   DigiFormTextarea,
   DigiFormInput,
 } from '@digi/arbetsformedlingen-react';
+
 import {
   ButtonVariation,
   FormInputType,
@@ -13,6 +23,7 @@ import {
   FormTextareaValidation,
   FormTextareaVariation,
 } from '@digi/arbetsformedlingen';
+
 import { EduToWorkData } from '../service/EduToWorkService';
 import IOccupations from '../interfaces/IOccupations';
 import { OccupationDispatchContext } from '../OccupationsContext';
@@ -37,6 +48,7 @@ const SearchForm = () => {
       workTitles(title, desc);
     }
   }, []);
+
   async function workTitles(title: string, description: string) {
     console.log('worktitles: ', title, description);
 
@@ -98,6 +110,7 @@ const SearchForm = () => {
             afVariation={FormInputVariation.MEDIUM}
             afType={FormInputType.TEXT}
             afValidation={FormInputValidation.NEUTRAL}
+            afAriaLabelledby='Lägg till utbildningstitel'
             value={headlineInput}
             onAfOnChange={(e) => setHeadlineInput(String(e.target.value))}
           />
@@ -106,11 +119,18 @@ const SearchForm = () => {
             afLabel='Utbildningsbeskrivning*'
             afVariation={FormTextareaVariation.MEDIUM}
             afValidation={FormTextareaValidation.NEUTRAL}
+            aria-labelledby='Lägg till utbildningsbeskrivning'
             value={textInput}
             onAfOnChange={(e) => setTextInput(String(e.target.value))}
           ></DigiFormTextarea>
           {errorMessage && (
-            <div className='text-[red] mb-[10px]'>{errorMessage}</div>
+            <div
+              className='text-[red] mb-[10px]'
+              aria-live='polite'
+              aria-atomic='true'
+            >
+              {errorMessage}
+            </div>
           )}
           <DigiButton
             className='border-2 border-accent rounded-lg'
@@ -118,6 +138,7 @@ const SearchForm = () => {
               workTitles(headlineInput, textInput);
             }}
             afVariation={ButtonVariation.PRIMARY}
+            aria-label='Sök efter yrken'
           >
             Sök
           </DigiButton>
