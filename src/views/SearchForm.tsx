@@ -119,7 +119,7 @@ const SearchForm = () => {
             afLabel='Utbildningsbeskrivning*'
             afVariation={FormTextareaVariation.MEDIUM}
             afValidation={FormTextareaValidation.NEUTRAL}
-            aria-labelledby='Sök efter utbildningsbeskrivning'
+            aria-labelledby='Lägg till utbildningsbeskrivning'
             value={textInput}
             onAfOnChange={(e) => setTextInput(String(e.target.value))}
           ></DigiFormTextarea>
