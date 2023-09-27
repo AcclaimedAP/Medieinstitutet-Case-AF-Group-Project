@@ -20,16 +20,16 @@ import { OccupationDispatchContext } from '../contexts/OccupationsContext';
 const SearchForm = () => {
   const dispatch = useContext(OccupationDispatchContext);
   const searchService = EduToWorkData();
-  const [headlineInput, setHeadlineInput] = useState<string>('');
-  const [textInput, setTextInput] = useState<string>('');
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [headlineInput, setHeadlineInput] = useState<string>("");
+  const [textInput, setTextInput] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const title = searchParams.get('title');
-    const desc = searchParams.get('desc');
+    const title = searchParams.get("title");
+    const desc = searchParams.get("desc");
 
     if (title && desc) {
       setHeadlineInput(title);
@@ -37,19 +37,17 @@ const SearchForm = () => {
       workTitles(title, desc);
     }
   }, []);
-  async function workTitles(title: string, description: string) {
-    console.log('worktitles: ', title, description);
 
-    if (description.trim() === '') {
-      setErrorMessage('Vänligen ange en utbildningsbeskrivning.');
+  async function workTitles(title: string, description: string) {
+    console.log("worktitles: ", title, description);
+
+    if (description.trim() === "") {
+      setErrorMessage("Vänligen ange en utbildningsbeskrivning.");
       return;
     }
 
-    setErrorMessage('');
-    const result: IOccupations = await searchService.fetchWorkTitles(
-      title,
-      description
-    );
+    setErrorMessage("");
+    const result: IOccupations = await searchService.fetchWorkTitles(title, description);
 
     const payload = {
       occupations: result,
@@ -57,22 +55,22 @@ const SearchForm = () => {
       textInput: textInput,
     };
 
-    dispatch({ payload, type: 'updated' });
-    navigate('/search');
+    dispatch({ payload, type: "updated" });
+    navigate("/search");
 
     setIsButtonClicked(true);
 
-    const id = searchParams.get('id') || '';
+    const id = searchParams.get("id") || "";
 
     if (id) {
       return setSearchParams({
         title: title,
         desc: description,
-        page: '1',
+        page: "1",
         id: id,
       });
     }
-    setSearchParams({ title: title, desc: description, page: '1' });
+    setSearchParams({ title: title, desc: description, page: "1" });
   }
 
   return (
@@ -98,6 +96,7 @@ const SearchForm = () => {
             afVariation={FormInputVariation.MEDIUM}
             afType={FormInputType.TEXT}
             afValidation={FormInputValidation.NEUTRAL}
+            afAriaLabelledby='Lägg till utbildningstitel'
             value={headlineInput}
             onAfOnChange={(e) => setHeadlineInput(String(e.target.value))}
           />
@@ -106,11 +105,18 @@ const SearchForm = () => {
             afLabel='Utbildningsbeskrivning*'
             afVariation={FormTextareaVariation.MEDIUM}
             afValidation={FormTextareaValidation.NEUTRAL}
+            aria-labelledby='Lägg till utbildningsbeskrivning'
             value={textInput}
             onAfOnChange={(e) => setTextInput(String(e.target.value))}
           ></DigiFormTextarea>
           {errorMessage && (
-            <div className='text-[red] mb-[10px]'>{errorMessage}</div>
+            <div
+              className='text-[red] mb-[10px]'
+              aria-live='polite'
+              aria-atomic='true'
+            >
+              {errorMessage}
+            </div>
           )}
           <DigiButton
             className='border-2 border-accent rounded-lg'
@@ -118,11 +124,11 @@ const SearchForm = () => {
               workTitles(headlineInput, textInput);
             }}
             afVariation={ButtonVariation.PRIMARY}
+            aria-label='Sök efter yrken'
           >
             Sök
           </DigiButton>
         </div>
-      </div>
     </>
   );
 };

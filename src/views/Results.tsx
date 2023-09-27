@@ -20,9 +20,9 @@ const SearchResults = () => {
   useEffect(() => {
     const fetchData = async () => {
       const params = {
-        title: searchParams.get('title'),
-        desc: searchParams.get('desc'),
-        page: searchParams.get('page'),
+        title: searchParams.get("title"),
+        desc: searchParams.get("desc"),
+        page: searchParams.get("page"),
       };
 
       if (
@@ -43,23 +43,15 @@ const SearchResults = () => {
           textInput: params.desc,
         };
 
-        dispatch({ payload, type: 'updated' });
+        dispatch({ payload, type: "updated" });
       }
     };
     fetchData();
-  }, [
-    searchParams.get('title'),
-    searchParams.get('desc'),
-    searchParams.get('page'),
-  ]);
+  }, [searchParams.get("title"), searchParams.get("desc"), searchParams.get("page")]);
 
   const changePage = async (page: number) => {
     console.log(page);
-    const result: IOccupations = await searchService.fetchWorkTitles(
-      String(context?.state.headlineInput),
-      String(context?.state.textInput),
-      page * 10
-    );
+    const result: IOccupations = await searchService.fetchWorkTitles(String(context?.state.headlineInput), String(context?.state.textInput), page * 10);
 
     const payload = {
       occupations: result,
@@ -67,7 +59,7 @@ const SearchResults = () => {
       textInput: String(context?.state.textInput),
     };
 
-    dispatch({ payload, type: 'updated' });
+    dispatch({ payload, type: "updated" });
 
     setSearchParams({
       title: payload.headlineInput,
@@ -84,7 +76,10 @@ const SearchResults = () => {
             key={index}
             className='bg-white mb-2 pl-1 border border-primary rounded-lg'
           >
-            <OccupationAccordion occupation={occupation} key={index} />
+            <OccupationAccordion
+              occupation={occupation}
+              key={index}
+            />
           </div>
         ))}
         <div className='flex gap-2 justify-center w-full mt-4'>
@@ -94,10 +89,10 @@ const SearchResults = () => {
             }).map((_, index) => (
               <button
                 key={index}
+                aria-label={`Visa sida ${index + 1}`}
                 className={`px-4 py-2 border-2 border-primary rounded-lg bg-white font-semibold text-lg transition-all duration-300 hover:bg-primary hover:text-white ${
                   Number(searchParams.get('page')) === index + 1 &&
-                  '!bg-primary !text-whiteDark'
-                }`}
+                  '!bg-primary !text-whiteDark'}`}
                 onClick={() => changePage(index)}
               >
                 {index + 1}
@@ -116,7 +111,7 @@ const SearchResults = () => {
     <>
       <div
         className='bg-whiteDark laptop:opacity-90 min-h-custom flex flex-col items-center justify-center w-auto p-10 border-2 border-primary 
-      pb-16 laptop:pb-10 laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-20 laptop:translate-x-[-100px] laptop:rounded-lg'
+      pb-16 laptop:mt-7 laptop:absolute laptop:right-0 laptop:top-0 laptop:translate-x-[-100px] laptop:rounded-lg'
       >
         <DigiTypography afVariation={TypographyVariation.SMALL}>
           <h1 className='text-primary'>
@@ -130,9 +125,7 @@ const SearchResults = () => {
             )}
           </h1>
         </DigiTypography>
-        {context?.state.occupations && (
-          <OccupationMap {...context?.state.occupations}></OccupationMap>
-        )}
+        {context?.state.occupations && <OccupationMap {...context?.state.occupations}></OccupationMap>}
       </div>
     </>
   );
