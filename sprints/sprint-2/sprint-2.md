@@ -29,3 +29,17 @@
 - Anton: Jag har lagt till conditional rendering på sökrutan i tablet-vyn. Har fått jobba med context och reducer vilket var nyttigt. Vi har snackat ihop oss lite om presentationen som äger rum imorgon. Vi ska se över lite buggar och småfel idag.
 
 - Alexander: Jag har fixat bakgrundsbuggen. Jag kommer att gå över en bit av vår kod som har med vår searchparams att göra imorgon under redovisningen.
+
+## 29-Sep-2023 Retro
+
+### Vad gick bra?
+
+- Presentationen gick bra. Vi har hållt bra tempo under hela projektet. Alla har varit delaktiga. Slutprodukten blev bra.
+
+### Vad kan vi förbättra?
+
+- Vi kunde delat upp komponenterna till fler mindre komponenter. Vi kunde hållt fler dialoger kring varandras kod.
+
+### Vad kan vi ta med oss till nästa projekt?
+
+- Vi kunde planerat vår styling bättre, det blev svårt när fler satt och gjorde styling samtidigt i olika vyer, mycket konflikter.
