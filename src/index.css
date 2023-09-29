@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Open Sans', sans-serif !important;
+}
+
+.form span {
+  color: #f1f1f1;
+}
+
+.form button {
+  background-color: #111a31 !important;
+}
+
+.form button span {
+  color: #14b8a6;
+}
+
+.form button:hover span {
+  color: #0f172a !important;
+}
+
+.form button:hover {
+  background-color: #14b8a6 !important;
+}
+
+.arrow-icon-up svg {
+  color: #14b8a6 !important;
+}
+
+.arrow-icon-down svg {
+  color: #0f172a !important;
+}
+
+button {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 150ms !important;
+}
